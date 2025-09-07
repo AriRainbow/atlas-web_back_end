@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""This module defines and annotates four variables with basic Python types."""
 
 
 a: int = 1
