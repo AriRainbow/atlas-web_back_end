@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Asynchronous coroutine that waits a random amount of time and returns the delay."""
+"""
+Asynchronous coroutine that waits a random
+    amount of time and returns the delay.
+"""
 
 import asyncio
 import random
@@ -8,10 +11,10 @@ import random
 async def wait_random(max_delay: int = 10) -> float:
     """
     Wait for a random delay between 0 and max_delay seconds and return it.
-    
+
     Args:
         max_delay (int): The maximum number of secods to wait.
-        
+   
     Returns:
         float: The random delat that was waited.
     """
