@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 This module contains a coroutine the defines asynchronous generator,
-which yields 10 random float numbers between 0 and 10 with a 1-second delay between each.
+which yields 10 random float numbers between 0 and 10 with a 1-second
+delay between each.
 """
 
 import asyncio
