@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""This module provides a coroutine that gathers random numbers using async comprehension."""
+"""
+This module provides a coroutine that gathers
+random numbers using async comprehension.
+"""
 
 from typing import List
 async_generator = __import__('0-async_generator').async_generator
