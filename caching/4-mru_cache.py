@@ -23,7 +23,7 @@ class MRUCache(BaseCaching):
         """
         if key is None or item is None:
             return
-       
+
         if key in self.cache_data:
             # Remove key to update its position
             del self.cache_data[key]
@@ -44,7 +44,7 @@ class MRUCache(BaseCaching):
         """
         if key is None or key not in self.cache_data:
             return None
-       
+     
         # Update usage to mark it as most recently used
         value = self.cache_data.pop(key)
         self.cache_data[key] = value
