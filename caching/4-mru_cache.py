@@ -28,12 +28,14 @@ class MRUCache(BaseCaching):
             # Remove key to update its position
             del self.cache_data[key]
 
-        self.cache_data[key] = item  # MRU goes to end
-
+        
+        # MRU discard logic BEFORE adding new item
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
             # MRU = pop the end
             last_key, _ = self.cache_data.popitem(last=True)
             print(f"DISCARD: {last_key}")
+
+        self.cache_data[key] = item  # MRU goes to end
 
     def get(self, key):
         """
