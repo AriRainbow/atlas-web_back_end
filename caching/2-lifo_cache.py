@@ -31,7 +31,7 @@ class LIFOCache(BaseCaching):
 
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
             # LIFO = pop the last inserted key
-            last_key = self.key_stack.pop(-2)  # Remove second-to-last seince latest was just added
+            last_key = self.key_stack.pop(-2)  # Remove second-to-last, latest just added
             del self.cache_data[last_key]
             print(f"DISCARD: {last_key}")
 
