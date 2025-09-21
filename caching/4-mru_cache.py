@@ -44,7 +44,7 @@ class MRUCache(BaseCaching):
         """
         if key is None or key not in self.cache_data:
             return None
-     
+  
         # Update usage to mark it as most recently used
         value = self.cache_data.pop(key)
         self.cache_data[key] = value
