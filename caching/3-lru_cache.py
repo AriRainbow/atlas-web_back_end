@@ -42,9 +42,9 @@ class LRUCache(BaseCaching):
         """
         if key is None or key not in self.cache_data:
             return None
-  
+
         # Mark this key as recently used
         value = self.cache_data.pop(key)
         self.cache_data[key] = value
         return value
-   
+ 
