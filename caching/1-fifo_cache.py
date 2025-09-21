@@ -23,7 +23,7 @@ class FIFOCache(BaseCaching):
         """
         if key is None or item is None:
             return
- 
+
         if key in self.cache_data:
             # Remove it first so re-inserting updates order
             del self.cache_data[key]
