@@ -65,6 +65,7 @@ class RedactingFormatter(logging.Formatter):
         original = super().format(record)
         return filter_datum(self.fields, self.REDACTION, original, self.SEPARATOR)
 
+
 # Define the fields considered Personally Identifiable Information
 PII_FIELDS: tuple = ("name", "email", "phone", "ssn", "password")
 
