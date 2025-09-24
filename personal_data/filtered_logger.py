@@ -6,6 +6,9 @@ Module for filtering personally identifiable information (PII) from log messages
 import re
 import logging
 from typing import List
+import os
+import mysql.connector
+from mysql.connector.connection import MySQLConnection
 
 
 def filter_datum(
@@ -83,3 +86,29 @@ def get_logger() -> logging.Logger:
     logger.addHandler(stream_handler)
 
     return logger
+
+
+def get_db() -> MySQLConnection:
+    """
+    Establishes and returns a secure connection to the MySQL database.
+
+    Environment Variables Used:
+        - PERSONAL_DATA_DB_USERNAME (default: "root")
+        - PERSONAL_DATA_DB_PASSWORD (default: "")
+        - PERSONAL_DATA_DB_HOST (default: "localhost")
+        - PERSONAL_DATA_DB_NAME (no default, required)
+
+    Returns:
+        A MySQLConnection object to the specified database.
+    """
+    username = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
+    password = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
+    database = os.getenv("PERSONAL_DATA_DB_NAME")
+
+    return mysql.connector.connect(
+        user=username,
+        password=password,
+        host=host,
+        database=database
+    )
