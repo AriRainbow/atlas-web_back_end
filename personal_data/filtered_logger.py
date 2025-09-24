@@ -113,3 +113,27 @@ def get_db() -> MySQLConnection:
         host=host,
         database=database
     )
+
+
+def main() -> None:
+    """
+    Retrieves all rows from the 'users' table and logs each with PII fields redacted.
+    """
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+
+    field_names = [desc[0] for desc in cursor.description]
+    logger = get_logger()
+
+    for row in cursor:
+        row_dict = dict(zip(field_names, row))
+        message = "; ".join([f"{k}={v}" for k, v in row_dict.items()]) + ";"
+        logger.info(message)
+
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
