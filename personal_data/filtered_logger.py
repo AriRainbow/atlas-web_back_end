@@ -4,6 +4,7 @@ Module for filtering personally identifiable information (PII) from log messages
 """
 
 import re
+import logging
 from typing import List
 
 
