@@ -69,7 +69,7 @@ class Server:
         dataset = self.dataset()
 
         return dataset[start:end]
-  
+
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
         """
         Returns pagination metadata with the page data.
