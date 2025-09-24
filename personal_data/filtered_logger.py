@@ -29,6 +29,7 @@ def filter_datum(
     pattern = f"({'|'.join(fields)})=.*?{separator}"
     return re.sub(pattern, lambda m: f"{m.group(1)}={redaction}{separator}", message)
 
+
 class RedactingFormatter(logging.Formatter):
     """
     Redacting Formatter class that obfuscates sensitive PII fields in log records.
