@@ -8,12 +8,14 @@ from typing import List, TypeVar
 
 
 class Auth:
-    """ Template for all authentication systems """
+    """
+    Template for all authentication systems
+    """
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """ Determine if a path requires authentication """
 
-        if path is None or excluded_paths is None or excluded_paths == []:
+        if path is None or excluded_paths is None or not excluded_paths:
             return True
 
         # Ensure trailing slash for comparison
@@ -27,8 +29,15 @@ class Auth:
         return True
 
     def authorization_header(self, request=None) -> str:
-        """ Returns None (to be implemented later) """
-        return None
+        """ Return the Authorization header if present """
+        if request is None:
+            return None
+
+        auth_header = request.headers.get('Authorization')
+        if auth_header is None:
+            return None
+
+        return auth_header
 
     def current_user(self, request=None) -> TypeVar('User'):
         """ Returns None (to be implemented later)"""
