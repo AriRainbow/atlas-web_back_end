@@ -23,6 +23,7 @@ else:
     from api.v1.auth.auth import Auth
     auth = Auth()
 
+
 @app.before_request
 def before_request():
     """Filter requests before handling"""
@@ -42,6 +43,7 @@ def before_request():
 
     if auth.current_user(request) is None:
         abort(403)
+
 
 @app.errorhandler(404)
 def not_found(error) -> str:
