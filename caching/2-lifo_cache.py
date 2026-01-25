@@ -46,7 +46,8 @@ class LIFOCache(BaseCaching):
             key (str): The key of the item to retrieve.
 
         Returns:
-            any: The item stored under the given key, or None if key is None or not found.
+            any: The item stored under the given key,
+            or None if key is None or not found.
         """
         if key is None:
             return None
