@@ -27,6 +27,7 @@ class LIFOCache(BaseCaching):
         if key is None or item is None:
             return
 
+        # Update existing key
         if key in self.cache_data:
             self.cache_data[key] = item
             if key in self._stack:
@@ -34,19 +35,22 @@ class LIFOCache(BaseCaching):
             self._stack.append(key)
             return
 
-        # remember the last key BEFORE inserting
+        # Remember the last key BEFORE inserting
         last_key = self._stack[-1] if self._stack else None
 
         self.cache_data[key] = item
         self._stack.append(key)
 
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            if last_key is not None:
-                if last_key in self._stack:
-                    self._stack.remove(last_key)
-                if last_key in self.cache_data:
-                    del self.cache_data[last_key]
-                print("DISCARD: {}".format(last_key))
+            # Discard the last key in cache (before the new one).
+            # If no last key, discard the newly added key.
+            discard_key = last_key if last_key is not None else key
+
+            if discard_key in self._stack:
+                self._stack.remove(discard_key)
+            if discard_key in self.cache_data:
+                del self.cache_data[discard_key]
+                print("DISCARD: {}".format(discard_key))
 
     def get(self, key):
         """Retrieve an item from the cache by key.
