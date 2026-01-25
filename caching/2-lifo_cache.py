@@ -42,7 +42,7 @@ class LIFOCache(BaseCaching):
 
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
             if last_key is not None:
-                if last_key in  self._stack:
+                if last_key in self._stack:
                     self._stack.remove(last_key)
                 if last_key in self.cache_data:
                     del self.cache_data[last_key]
