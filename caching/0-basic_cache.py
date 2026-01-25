@@ -1,6 +1,9 @@
 #!/usr/bn/env python3
-"""BasicCache module that implements a simple caching system using a dictionary."""
+"""
+BasicCache module that implements a simple caching system using a dictionary.
+"""
 from base_caching import BaseCaching
+
 
 class BasicCache(BaseCaching):
     """BasicCache defines a caching system with no size limit."""
@@ -25,7 +28,8 @@ class BasicCache(BaseCaching):
             key (str): The key of the item to retrieve.
 
         Returns:
-            any: The item stored under the given key, or None if the key does not exist.
+            any: The item stored under the given key,
+            or None if the key does not exist.
         """
         if key is None:
             return None
