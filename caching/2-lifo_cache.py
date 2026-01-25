@@ -36,8 +36,7 @@ class LIFOCache(BaseCaching):
 
         self.cache_data[key] = item
         self._stack.append(key)
-
-        if len(self.cache_data) > BaseCaching.MAX_ITEMS
+        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
             if last_key is not None:
 
                 self._stack.remove(last_key)
