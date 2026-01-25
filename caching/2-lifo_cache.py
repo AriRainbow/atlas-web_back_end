@@ -31,13 +31,16 @@ class LIFOCache(BaseCaching):
             self.cache_data[key] = item
             return
 
-        if len(self.cache_data) >= BaseCaching.MAX_ITEMS and self._stack:
-            discard_key = self._stack.pop()
-            del self.cache_data[discard_key]
-            print("DISCARD: {}".format(discard_key))
+        # remember the last key BEFORE inserting
+        last_key = self._stack[-1] if self._stack else None
 
         self.cache_data[key] = item
         self._stack.append(key)
+
+        if len(self.cache_data) > BaseCaching.MAX_ITEMS and last_key is not None:
+            self._stack.remove(last_key)
+            del self.cache_data[last_key]
+            print("DISCARD: {}".format(last_key))
 
     def get(self, key):
         """Retrieve an item from the cache by key.
