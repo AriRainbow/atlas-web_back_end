@@ -15,52 +15,41 @@ class LIFOCache(BaseCaching):
         self._stack = []
 
     def put(self, key, item):
-        """Add an item to the cache using LIFO eviction.
+        """
+        Add an item to the cache.
 
         Args:
             key (str): The key under which the item is stored.
             item (any): The item to be stored in the cache.
 
         If key or item is None, the method does nothing.
-        If the cache exceeds MAX_ITEMS, the last inserted key is discarded.
+        Implements LIFO eviction policy when the cache exceeds MAX_ITEMS.
         """
         if key is None or item is None:
             return
 
-        # Update existing key
         if key in self.cache_data:
             self.cache_data[key] = item
-            if key in self._stack:
-                self._stack.remove(key)
-            self._stack.append(key)
             return
 
-        # Remember the last key BEFORE inserting
-        last_key = self._stack[-1] if self._stack else None
+        if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+            discard_key = self._stack.pop()
+            del self.cache_data[discard_key]
+            print("DISCARD: {}".format(discard_key))
 
         self.cache_data[key] = item
         self._stack.append(key)
 
-        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            # Discard the last key in cache (before the new one).
-            # If no last key, discard the newly added key.
-            discard_key = last_key if last_key is not None else key
-
-            if discard_key in self._stack:
-                self._stack.remove(discard_key)
-            if discard_key in self.cache_data:
-                del self.cache_data[discard_key]
-                print("DISCARD: {}".format(discard_key))
-
     def get(self, key):
-        """Retrieve an item from the cache by key.
+        """
+        Retrieve an item from the cache.
 
         Args:
             key (str): The key of the item to retrieve.
 
         Returns:
             any: The item stored under the given key,
-            or None if key is None or not found.
+            or None if the key does not exist.
         """
         if key is None:
             return None
