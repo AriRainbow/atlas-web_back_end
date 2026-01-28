@@ -4,53 +4,42 @@ FIFOCache module that implements a caching system with a FIFO eviction policy.
 """
 
 from base_caching import BaseCaching
+from collections import OrderedDict
 
 
 class FIFOCache(BaseCaching):
-    """FIFOCache defines a caching system with a FIFO eviction policy."""
+    """
+    FIFOCache is a caching system that evicts the
+    first inserted item once the cache exceeds MAX_ITEMS.
+    """
 
     def __init__(self):
-        """Initialize the FIFOCache."""
+        """Initialize with an ordered dictionary"""
         super().__init__()
-        self.keys_order = []
+        self.cache_data = OrderedDict()
 
     def put(self, key, item):
         """
-        Add an item to the cache.
-
-        Args:
-            key (str): The key under which the item is stored.
-            item (any): The item to be stored in the cache.
-
-        If key or item is None, the method does nothing.
-        Implements FIFO eviction policy when the cache exceeds MAX_ITEMS.
+        Add an item to the cache using FIFO eviction.
+        If the cache exceeds the limit, discard the oldest item.
         """
         if key is None or item is None:
             return
 
         if key in self.cache_data:
-            self.cache_data[key] = item
-            return
+            # Remove it first so re-inserting updates order
+            del self.cache_data[key]
 
         self.cache_data[key] = item
-        self.keys_order.append(key)
 
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            oldest_key = self.keys_order.pop(0)
-            del self.cache_data[oldest_key]
-            print("DISCARD: {}".format(oldest_key))
+            # FIFO = pop the first inserted item
+            discarded_key, _ = self.cache_data.popitem(last=False)
+            print(f"DISCARD: {discarded_key}")
 
     def get(self, key):
         """
-        Retrieve an item from the cache.
-
-        Args:
-            key (str): The key of the item to retrieve.
-
-        Returns:
-            any: The item stored under the given key,
-            or None if the key does not exist.
+        Retrieve item by key from cache.
+        Return None if key is missing or None.
         """
-        if key is None:
-            return None
         return self.cache_data.get(key, None)
