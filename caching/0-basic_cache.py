@@ -6,31 +6,23 @@ from base_caching import BaseCaching
 
 
 class BasicCache(BaseCaching):
-    """BasicCache defines a caching system with no size limit."""
+    """
+    BasicCache is a caching system that does not implement
+    any eviction strategy and has no limit.
+    """
 
     def put(self, key, item):
         """
-        Add an item to the cache.
-
-        Args:
-            key (str): The key under which the item is stored.
-            item (any): The item to be stored in the cache.
-
-        If key or item is None, the method does nothing.
+        Assigns the item to the cache dictionary using the key.
+        If key or item is None, do nothing.
         """
-        if key is not None and item is not None:
-            self.cache_data[key] = item
+        if key is None or item is None:
+            return
+        self.cache_data[key] = item
 
     def get(self, key):
-        """Retrieve an item from the cache.
-
-        Args:
-            key (str): The key of the item to retrieve.
-
-        Returns:
-            any: The item stored under the given key,
-            or None if the key does not exist.
         """
-        if key is None:
-            return None
+        Retrieves an item by key from the cache.
+        If key is None or not found, return None.
+        """
         return self.cache_data.get(key, None)
