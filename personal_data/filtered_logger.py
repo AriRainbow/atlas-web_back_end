@@ -30,7 +30,11 @@ def filter_datum(
         The log message with specified field values obfuscated.
     """
     pattern = f"({'|'.join(fields)})=.*?{separator}"
-    return re.sub(pattern, lambda m: f"{m.group(1)}={redaction}{separator}", message)
+    return re.sub(
+        pattern,
+        lambda m: f"{m.group(1)}={redaction}{separator}",
+        message
+    )
 
 
 class RedactingFormatter(logging.Formatter):
