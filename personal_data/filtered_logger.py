@@ -40,7 +40,8 @@ def filter_datum(
 
 class RedactingFormatter(logging.Formatter):
     """
-    Redacting Formatter class that obfuscates sensitive PII fields in log records.
+    Redacting Formatter class that obfuscates sensitive PII
+    fields in log records.
     """
 
     REDACTION = "***"
@@ -68,7 +69,12 @@ class RedactingFormatter(logging.Formatter):
             A formatted log string with sensitive fields redacted.
         """
         original = super().format(record)
-        return filter_datum(self.fields, self.REDACTION, original, self.SEPARATOR)
+        return filter_datum(
+            self.fields,
+            self.REDACTION,
+            original,
+            self.SEPARATOR
+        )
 
 
 # Define the fields considered Personally Identifiable Information
@@ -77,7 +83,8 @@ PII_FIELDS: tuple = ("name", "email", "phone", "ssn", "password")
 
 def get_logger() -> logging.Logger:
     """
-    Creates and configures a logger named 'user_data' with redaction for PII fields.
+    Creates and configures a logger named 'user_data'
+    with redaction for PII fields.
 
     Returns:
         A logging.Logger object configured to filter out PII.
@@ -122,7 +129,8 @@ def get_db() -> MySQLConnection:
 
 def main() -> None:
     """
-    Retrieves all rows from the 'users' table and logs each with PII fields redacted.
+    Retrieves all rows from the 'users' table
+    and logs each with PII fields redacted.
     """
     db = get_db()
     cursor = db.cursor()
