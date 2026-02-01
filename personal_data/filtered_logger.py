@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Module for filtering personally identifiable information (PII) from log messages.
+Module for filtering personally identifiable information (PII)
+from log messages.
 """
 
 import re
